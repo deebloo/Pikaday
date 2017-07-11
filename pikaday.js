@@ -552,10 +552,6 @@
                 if (e.firedBy === self) {
                     return;
                 }
-                if (hasMoment) {
-                    date = moment(opts.field.value, opts.inputFormats, opts.formatStrict);
-                    date = (date && date.isValid()) ? date.toDate() : null;
-                }
                 else {
                     date = new Date(Date.parse(opts.field.value));
                 }
@@ -638,11 +634,7 @@
                 addEvent(opts.field, 'change', self._onInputChange);
 
                 if (!opts.defaultDate) {
-                    if (hasMoment && opts.field.value) {
-                        opts.defaultDate = moment(opts.field.value, opts.inputFormats).toDate();
-                    } else {
-                        opts.defaultDate = new Date(Date.parse(opts.field.value));
-                    }
+                    opts.defaultDate = new Date(Date.parse(opts.field.value));
                     opts.setDefaultDate = true;
                 }
             }
@@ -750,23 +742,7 @@
          * return a formatted string of the current selection (using Moment.js if available)
          */
         toString: function (format) {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._o.showTime ? this._d.toString() : this._d.toDateString();
-        },
-
-        /**
-         * return a Moment.js object of the current selection (if available)
-         */
-        getMoment: function () {
-            return hasMoment ? moment(this._d) : null;
-        },
-
-        /**
-         * set the current selection from a Moment.js object (if available)
-         */
-        setMoment: function (date, preventOnSelect) {
-            if (hasMoment && moment.isMoment(date)) {
-                this.setDate(date.toDate(), preventOnSelect);
-            }
+            return !isDate(this._d) ? '' : this._o.showTime ? this._d.toString() : this._d.toDateString();
         },
 
         /**
@@ -893,14 +869,6 @@
                 newDay = new Date(day.valueOf() + difference);
             } else if (sign === 'subtract') {
                 newDay = new Date(day.valueOf() - difference);
-            }
-
-            if (hasMoment) {
-                if (sign === 'add') {
-                    newDay = moment(day).add(days, "days").toDate();
-                } else if (sign === 'subtract') {
-                    newDay = moment(day).subtract(days, "days").toDate();
-                }
             }
 
             this.setDate(newDay);
