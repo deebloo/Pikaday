@@ -26,9 +26,6 @@
     "type": "git",
     "url": "https://github.com/owenmead/Pikaday.git"
   },
-  "optionalDependencies": {
-    "moment": "2.x"
-  },
   "devDependencies": {
     "mocha": "~1.18.2",
     "expect.js": "^0.3.1"
@@ -39,7 +36,8 @@
     "browsers": [
       "ie/7..latest",
       "chrome/latest",
-      "firefox/3.6", "firefox/latest",
+      "firefox/3.6",
+      "firefox/latest",
       "safari/latest",
       "opera/latest"
     ]
